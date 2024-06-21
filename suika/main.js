@@ -1,3 +1,5 @@
+import { FRUITS } from "/suika/fruits.js";
+
 var Engine = Matter.Engine,
     Render = Matter.Render,
     Runner = Matter.Runner,
@@ -45,4 +47,22 @@ const topLine = Bodies.rectangle(310, 150, 620, 2, {
 Wolrd.add(world, [leftWall, rightWall, gorund, topLine]);
 
 Render.run(render);
-Render.run(engine);
+Runner.run(engine);
+
+// 과일 떨어지는 함수 만들기
+function addFruit() {
+    // 과일 index 저장
+    const index = 0;
+
+    const fruit = FRUITS[index];
+
+    const body = Bodies.circle(300, 50, fruit.radius, {
+        render : {
+            sprite : { texture : `${fruit.name}.png`}
+            // textur : fruit.name + 'png' }.
+        }
+    });
+    Wolrd.add(world, body);
+}
+
+addFruit();
