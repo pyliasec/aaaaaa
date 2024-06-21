@@ -40,6 +40,7 @@ const gorund = Bodies.rectangle(310, 820, 620, 60, {
 
 const topLine = Bodies.rectangle(310, 150, 620, 2, {
     isStatic : true, // 고정해주는 기능
+    isSensor : true, // 충돌은 감지하나 물리엔진은 적용안함
     render : {fillStyle : '#E6B143'} // 색상 지정 
 })
 
@@ -49,19 +50,30 @@ Wolrd.add(world, [leftWall, rightWall, gorund, topLine]);
 Render.run(render);
 Runner.run(engine);
 
+// 현재 과일 값을 저장할 변수 생성
+let ourrentBody = null;
+let ourentFruit = null;
+
 // 과일 떨어지는 함수 만들기
 function addFruit() {
     // 과일 index 저장
-    const index = 0;
+    const index = Math.floor(Math.random() * 5);
 
     const fruit = FRUITS[index];
 
     const body = Bodies.circle(300, 50, fruit.radius, {
+        index : index,
+        isSleeping : true,
         render : {
             sprite : { texture : `${fruit.name}.png`}
             // textur : fruit.name + 'png' }.
-        }
+        },
+        restitution : 0.2,
     });
+    // 현재 과일값 저장
+    ourrentBody = body;
+    ourentFruit = fruit;
+
     Wolrd.add(world, body);
 }
 
